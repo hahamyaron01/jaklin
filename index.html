@@ -147,6 +147,30 @@ section.node{padding-block:0}
 }
 .steps b{display:block}
 
+/* ---------- תרשים זרימה ---------- */
+.flow{margin-top:.4rem}
+.fstep{display:flex;gap:.75rem;align-items:flex-start;background:var(--paper);
+  border:1px solid rgba(126,154,79,.22);border-radius:14px;padding:.8rem .85rem;box-shadow:var(--shadow)}
+.fstep.last{border-color:rgba(181,140,70,.5);background:linear-gradient(180deg,#F7F3E9,#FBFAF6)}
+.fnum{flex:0 0 auto;width:2rem;height:2rem;border-radius:50%;background:var(--olive);color:#fff;
+  display:grid;place-items:center;font-weight:700;font-size:.88rem;line-height:1}
+.fstep.last .fnum{background:var(--gold)}
+.fbody b{display:block;color:var(--bark);font-size:1rem;line-height:1.35;margin-bottom:.12rem}
+.fbody span{display:block;color:var(--ink-soft);font-size:.92rem;line-height:1.6}
+.farrow{height:24px;position:relative}
+.farrow:before{content:"";position:absolute;inset-inline-start:1.28rem;top:0;bottom:5px;width:2px;background:var(--line)}
+.farrow:after{content:"";position:absolute;inset-inline-start:calc(1.28rem - 4px);bottom:0;
+  width:0;height:0;border-inline:5px solid transparent;border-top:7px solid var(--olive);opacity:.55}
+
+/* ---------- כרטיס הפניה ---------- */
+.cta-card{background:linear-gradient(180deg,#F4F1E7,#FBFAF6);border:1px solid rgba(181,140,70,.45);
+  border-radius:var(--r);padding:1.15rem 1rem;text-align:center;box-shadow:var(--shadow)}
+.cta-card p{margin:0 0 .9rem}
+.cta-card .btn{width:100%}
+.cta-card .note{display:block;margin-top:.6rem}
+.back-link{display:inline-flex;align-items:center;gap:.35rem;color:var(--olive-deep);
+  font-weight:600;font-size:.9rem;text-decoration:none;margin-bottom:.8rem}
+
 /* ---------- שאלון ---------- */
 .quiz{background:linear-gradient(180deg,#F4F1E7,#FBFAF6);border:1px solid rgba(181,140,70,.35);border-radius:var(--r);padding:1.25rem 1.15rem}
 .q{margin-bottom:1rem;padding-bottom:.9rem;border-bottom:1px dashed rgba(126,154,79,.3)}
@@ -329,30 +353,25 @@ section{padding:1.1rem 0}
 
   <section class="node" id="process">
     <h2>איך זה עובד</h2>
-    <ol class="steps">
-      <li><b>שיחת התאמה קצרה</b>בטלפון, ללא עלות וללא התחייבות. מבררים אם אני האדם הנכון עבורכם.</li>
-      <li><b>פגישת היכרות</b>מיפוי: מה קורה, מה כבר ניסיתם, ולאן הייתם רוצים להגיע.</li>
-      <li><b>תוכנית עבודה ממוקדת</b>מגדירים יחד מטרה אחת או שתיים ברורות, וקצב פגישות שמתאים לחיים שלכם.</li>
-      <li><b>עבודה בין הפגישות</b>התרגול האמיתי קורה בבית. אתם יוצאים עם משהו קונקרטי לנסות.</li>
-      <li><b>סיכום וסיום</b>תהליך ייעוץ הוא לא לכל החיים. מסיימים כשהכלים עברו אליכם.</li>
-    </ol>
+    <div class="flow">
+      <div class="fstep"><span class="fnum">1</span><div class="fbody"><b>שיחת התאמה קצרה</b><span>בטלפון, ללא עלות וללא התחייבות. מבררים אם אני האדם הנכון עבורכם.</span></div></div>
+      <div class="farrow" aria-hidden="true"></div>
+      <div class="fstep"><span class="fnum">2</span><div class="fbody"><b>פגישת היכרות</b><span>מה קורה, מה כבר ניסיתם, ולאן הייתם רוצים להגיע.</span></div></div>
+      <div class="farrow" aria-hidden="true"></div>
+      <div class="fstep"><span class="fnum">3</span><div class="fbody"><b>תוכנית עבודה ממוקדת</b><span>מגדירים יחד מטרה אחת או שתיים, וקצב פגישות שמתאים לחיים שלכם.</span></div></div>
+      <div class="farrow" aria-hidden="true"></div>
+      <div class="fstep"><span class="fnum">4</span><div class="fbody"><b>העבודה שבין הפגישות</b><span>התרגול האמיתי קורה בבית. יוצאים עם משהו קונקרטי לנסות.</span></div></div>
+      <div class="farrow" aria-hidden="true"></div>
+      <div class="fstep last"><span class="fnum">5</span><div class="fbody"><b>סיכום וסיום</b><span>תהליך ייעוץ אינו לכל החיים. מסיימים כשהכלים כבר אצלכם.</span></div></div>
+    </div>
   </section>
 
   <section class="node" id="check">
     <h2>איפה אתם נמצאים עכשיו?</h2>
-    <p>שש שאלות, פחות מדקה. לא מבחן ולא אבחון — רק דרך לשים מילים על משהו שקשה להגיד בקול.</p>
-    <div class="quiz">
-      <form id="quizForm">
-        <div class="q"><p>1. שיחות פשוטות אצלנו מתגלגלות לריב.</p><div class="opts" data-q="1"></div></div>
-        <div class="q"><p>2. אנחנו באותו בית, אבל כל אחד לעצמו.</p><div class="opts" data-q="2"></div></div>
-        <div class="q"><p>3. אני נמנע/ת מלומר מה שאני באמת מרגיש/ה, כדי לא לפתוח סיפור.</p><div class="opts" data-q="3"></div></div>
-        <div class="q"><p>4. הילדים סופגים את המתח שבינינו.</p><div class="opts" data-q="4"></div></div>
-        <div class="q"><p>5. אנחנו חוזרים שוב ושוב לאותה מריבה בדיוק.</p><div class="opts" data-q="5"></div></div>
-        <div class="q"><p>6. יש רגעים שאני מתגעגע/ת לאיך שהיינו.</p><div class="opts" data-q="6"></div></div>
-        <button type="submit" class="btn btn-main" style="width:100%">הצגת התוצאה</button>
-      </form>
-      <div id="quizResult" hidden></div>
-      <p class="note" style="margin-top:.9rem">השאלון אינו אבחון ואינו תחליף לייעוץ מקצועי. התשובות נשארות במכשיר שלכם ואינן נשלחות לאף אחד.</p>
+    <div class="cta-card">
+      <p>שש שאלות בזוגיות, במשפחה או בהורות — פחות מדקה. לא מבחן ולא אבחון, רק דרך לשים מילים על משהו שקשה להגיד בקול.</p>
+      <a class="btn btn-main" href="check.html">לשאלון הקצר</a>
+      <span class="note">אנונימי לחלוטין. התשובות נשארות במכשיר שלכם.</span>
     </div>
   </section>
 
@@ -374,7 +393,7 @@ section{padding:1.1rem 0}
 
   <section class="node" id="contact">
     <h2>נדבר?</h2>
-    <p>הדרך המהירה ביותר היא וואטסאפ. אם נוח לכם להשאיר הודעה — הטופס למטה מגיע אליי ישירות, ואחזור אליכם בדרך שתבחרו.</p>
+    <p>הדרך המהירה ביותר היא וואטסאפ, והכפתור הצף מלווה אתכם לאורך כל העמוד. אפשר גם בטלפון או במייל — מה שנוח לכם.</p>
 
     <ul class="contact-list">
       <li><a href="https://wa.me/972525866427?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%96%27%D7%A7%D7%9C%D7%99%D7%9F%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8" target="_blank" rel="noopener">
@@ -387,55 +406,6 @@ section{padding:1.1rem 0}
         <span class="ic"><svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4.2-8 4.8-8-4.8V6l8 4.8L20 6v2.2Z"/></svg></span>
         <span>אימייל<small>jaklinfab@gmail.com</small></span></a></li>
     </ul>
-
-    <div class="card form">
-      <h3>השארת הודעה</h3>
-      <div class="field">
-        <label for="fName">שם</label>
-        <input id="fName" autocomplete="name" placeholder="איך לפנות אליכם?">
-        <div class="err">נשמח לשם, כדי לדעת למי לחזור.</div>
-      </div>
-      <div class="field">
-        <label for="fPhone">טלפון</label>
-        <input id="fPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="05X-XXXXXXX">
-        <div class="err">צריך מספר טלפון תקין כדי לחזור אליכם.</div>
-      </div>
-      <div class="field">
-        <label for="fTopic">הנושא</label>
-        <select id="fTopic">
-          <option>ייעוץ זוגי</option>
-          <option>ייעוץ משפחתי</option>
-          <option>הדרכת הורים</option>
-          <option>עדיין לא בטוח/ה</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="fWhen">מתי נוח שאחזור אליכם?</label>
-        <select id="fWhen">
-          <option>בכל שעה</option>
-          <option>בוקר (8:00–12:00)</option>
-          <option>צהריים (12:00–16:00)</option>
-          <option>ערב (16:00–21:00)</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="fMsg">משהו שחשוב שאדע מראש (לא חובה)</label>
-        <textarea id="fMsg" placeholder="כמה מילים על מה שמביא אתכם."></textarea>
-      </div>
-      <p class="form-alert" id="formAlert" role="alert" hidden></p>
-      <button class="btn btn-main" id="sendWa" style="width:100%;margin-bottom:.5rem">שליחת ההודעה בוואטסאפ</button>
-      <button class="btn btn-ghost" id="sendMail" style="width:100%">שליחה במייל במקום</button>
-      <p class="note" style="margin-top:.6rem;text-align:center">
-        <a class="inline-link" href="mailto:jaklinfab@gmail.com?subject=%D7%A4%D7%A0%D7%99%D7%99%D7%94%20%D7%9E%D7%94%D7%A2%D7%9E%D7%95%D7%93">פתיחת מייל ריק אל ז'קלין, בלי הטופס</a>
-      </p>
-      <div class="mail-opts" id="mailOpts" hidden>
-        <p>ההודעה מוכנה ומופנית אל <b>jaklinfab@gmail.com</b>. איך לפתוח אותה?</p>
-        <a class="btn btn-main" id="mailGmail" href="#" target="_blank" rel="noopener">פתיחה ב-Gmail</a>
-        <a class="btn btn-ghost" id="mailNative" href="#">פתיחה באפליקציית המייל</a>
-        <button class="btn btn-ghost" id="mailCopy" type="button">העתקת ההודעה והכתובת</button>
-      </div>
-      <p class="note" style="margin-top:.8rem">ההודעה נפתחת אצלכם באפליקציה לפני השליחה, כדי שתראו בדיוק מה נשלח. הפרטים אינם נשמרים בשרת.</p>
-    </div>
 
     <div class="share">
       <h3>מכירים מישהו שזה יכול לעזור לו?</h3>
@@ -516,105 +486,23 @@ section{padding:1.1rem 0}
     });
   });
 
+  /* פתיחת הטאב המתאים לפי הקישור (#zugi / #mishpacha / #horut) */
+  var HASH_TAB={zugi:'t1',mishpacha:'t2',horut:'t3'};
+  (function(){
+    var id=HASH_TAB[location.hash.slice(1)];
+    if(!id) return;
+    var t=document.getElementById(id);
+    if(!t) return;
+    select(t);
+    setTimeout(function(){
+      document.getElementById('services').scrollIntoView({behavior:'smooth',block:'start'});
+    },120);
+  })();
+
   /* וואטסאפ מכפתור הגיבור */
   document.querySelectorAll('[data-wa]').forEach(function(a){
     a.href='https://wa.me/'+PHONE+'?text='+encodeURIComponent(a.dataset.wa);
     a.target='_blank'; a.rel='noopener';
-  });
-
-  /* שאלון */
-  var LABELS=['כמעט אף פעם','לפעמים','לעיתים קרובות'];
-  document.querySelectorAll('.opts').forEach(function(box){
-    var q=box.dataset.q;
-    LABELS.forEach(function(txt,v){
-      var lb=document.createElement('label');
-      lb.innerHTML='<input type="radio" name="q'+q+'" value="'+v+'"><span>'+txt+'</span>';
-      box.appendChild(lb);
-    });
-  });
-  document.getElementById('quizForm').addEventListener('submit',function(e){
-    e.preventDefault();
-    var sum=0,answered=0;
-    for(var i=1;i<=6;i++){
-      var c=document.querySelector('input[name="q'+i+'"]:checked');
-      if(c){sum+=+c.value;answered++;}
-    }
-    var out=document.getElementById('quizResult');
-    var html;
-    if(answered<6){
-      html='<b>נשארו עוד כמה שאלות.</b><br>ענו על כל השש כדי לראות את התמונה המלאה.';
-    }else if(sum<=3){
-      html='<b>הבית שלכם נשמע יציב ברובו.</b><p>גם כשהכל בסדר, יש ערך במפגש אחד או שניים שמחזקים את מה שכבר עובד — לפני שמשהו נשחק. אם משהו בכל זאת מטריד אתכם, אני כאן.</p>';
-    }else if(sum<=7){
-      html='<b>יש חיכוך שחוזר על עצמו.</b><p>זה השלב שבו תהליך קצר וממוקד עושה את ההבדל הגדול ביותר — הדפוס עוד לא התקבע, והשינוי מהיר יותר. שווה שיחת התאמה קצרה.</p>';
-    }else{
-      html='<b>נשמע שאתם עייפים מהמאבק הזה.</b><p>כשהמריבות חוזרות והריחוק מצטבר, קשה מאוד לצאת מזה לבד — לא בגלל חוסר רצון, אלא כי שניכם כבר בתוך התסריט. זה בדיוק המקום שבו צד שלישי עוזר. בואו נדבר.</p>';
-    }
-    if(answered===6){
-      html+='<a class="btn btn-main" style="width:100%;margin-top:.6rem" href="https://wa.me/'+PHONE+'?text='+encodeURIComponent("שלום ז'קלין, מילאתי את השאלון באתר ואשמח לשיחת היכרות.")+'" target="_blank" rel="noopener">לשיחת היכרות</a>';
-    }
-    out.innerHTML=html; out.hidden=false;
-    out.scrollIntoView({behavior:'smooth',block:'nearest'});
-  });
-
-  /* טופס */
-  var F={name:'fName',phone:'fPhone',topic:'fTopic',when:'fWhen',msg:'fMsg'};
-  var DRAFT='jf_draft';
-  try{
-    var d=JSON.parse(localStorage.getItem(DRAFT)||'{}');
-    Object.keys(F).forEach(function(k){ if(d[k]) document.getElementById(F[k]).value=d[k]; });
-  }catch(e){}
-  function saveDraft(){
-    var d={}; Object.keys(F).forEach(function(k){ d[k]=document.getElementById(F[k]).value; });
-    try{localStorage.setItem(DRAFT,JSON.stringify(d))}catch(e){}
-  }
-  Object.keys(F).forEach(function(k){
-    document.getElementById(F[k]).addEventListener('input',saveDraft);
-    document.getElementById(F[k]).addEventListener('change',saveDraft);
-  });
-  function valid(){
-    var ok=true;
-    var n=document.getElementById('fName'), p=document.getElementById('fPhone');
-    [[n,n.value.trim().length>=2],[p,/^0\d{1,2}-?\d{7}$|^\+?\d{9,15}$/.test(p.value.replace(/[\s-]/g,''))]]
-      .forEach(function(pair){
-        pair[0].parentNode.classList.toggle('bad',!pair[1]);
-        if(!pair[1]){ok=false;}
-      });
-    var alertBox=document.getElementById('formAlert');
-    if(!ok){
-      alertBox.textContent='כדי לשלוח צריך שם וטלפון. השלימו את השדות המסומנים ולחצו שוב.';
-      alertBox.hidden=false;
-      document.querySelector('.field.bad input').focus();
-    }else{
-      alertBox.hidden=true;
-    }
-    return ok;
-  }
-  function body(){
-    var v={}; Object.keys(F).forEach(function(k){ v[k]=document.getElementById(F[k]).value.trim(); });
-    return "שלום ז'קלין,\nהגעתי דרך עמוד האינטרנט.\n\nשם: "+v.name+
-           "\nטלפון: "+v.phone+"\nנושא: "+v.topic+"\nזמן נוח לחזרה: "+v.when+
-           (v.msg?"\n\n"+v.msg:"");
-  }
-  document.getElementById('sendWa').addEventListener('click',function(){
-    if(!valid())return;
-    window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent(body()),'_blank','noopener');
-  });
-  var mailOpts=document.getElementById('mailOpts');
-  document.getElementById('sendMail').addEventListener('click',function(){
-    if(!valid())return;
-    var su=encodeURIComponent('פנייה מהאתר – '+document.getElementById('fTopic').value);
-    var bd=encodeURIComponent(body());
-    document.getElementById('mailGmail').href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to='+MAIL+'&su='+su+'&body='+bd;
-    document.getElementById('mailNative').href='mailto:'+MAIL+'?subject='+su+'&body='+bd;
-    mailOpts.hidden=false;
-    mailOpts.scrollIntoView({behavior:'smooth',block:'nearest'});
-  });
-  document.getElementById('mailCopy').addEventListener('click',function(){
-    var b=this, txt='אל: '+MAIL+'\n\n'+body();
-    function done(){var t=b.textContent;b.textContent='הועתק — הדביקו במייל';setTimeout(function(){b.textContent=t},2200);}
-    if(navigator.clipboard){navigator.clipboard.writeText(txt).then(done).catch(function(){});}
-    else{var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){}ta.remove();}
   });
 
   /* שיתוף */
