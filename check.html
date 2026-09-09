@@ -254,20 +254,31 @@ section{padding:1.1rem 0}
 }
 </style>
 <style>
-.tracks{display:grid;gap:.6rem;margin:1.2rem 0 .4rem}
-.track{display:flex;align-items:center;gap:.8rem;text-align:start;width:100%;
-  background:var(--paper);border:1px solid rgba(126,154,79,.3);border-radius:14px;
-  padding:.9rem;box-shadow:var(--shadow);color:var(--ink)}
-.track:active{transform:translateY(1px)}
-.track b{display:block;font-size:1.02rem;color:var(--bark)}
-.track span{display:block;font-size:.86rem;color:var(--ink-soft);line-height:1.5}
-.track .tic{flex:0 0 auto;width:2.3rem;height:2.3rem;border-radius:50%;background:var(--sky-deep);
-  display:grid;place-items:center;font-size:1.1rem}
+/* --- חסימות רוחב, שום דבר לא חורג מרוחב המסך --- */
+html{overflow-x:visible}
+body{overflow-x:clip;max-width:100%}
+main,section,div,p,h1,h2,h3,button,a,label{max-width:100%;min-width:0}
+.wrap{overflow-wrap:anywhere}
+
+.tracks{display:grid;gap:.6rem;margin:1.1rem 0 .4rem}
+.track{display:flex;align-items:center;gap:.8rem;width:100%;text-align:start;background:var(--paper);
+  border:1px solid rgba(126,154,79,.3);border-radius:14px;padding:.85rem .9rem;
+  box-shadow:var(--shadow);color:var(--ink);font:inherit}
+.track .tic{flex:0 0 auto;width:2.4rem;height:2.4rem;border-radius:50%;background:var(--sky-deep);
+  display:grid;place-items:center;font-size:1.2rem;line-height:1}
+.track .ttx{flex:1 1 auto;min-width:0}
+.track b{display:block;font-size:1.02rem;color:var(--bark);line-height:1.35}
+.track i{display:block;font-style:normal;font-size:.86rem;color:var(--ink-soft);line-height:1.5}
 .switch{background:none;border:0;color:var(--olive-deep);font-weight:600;font-size:.88rem;
   padding:.3rem 0;text-decoration:underline}
 #quizWrap[hidden],#chooser[hidden]{display:none}
 .track-name{display:inline-block;background:var(--sky-deep);border-radius:999px;
   padding:.15rem .7rem;font-size:.82rem;font-weight:600;margin-bottom:.6rem}
+/* שורת התשובות: גריד של שלוש עמודות שוות — לא flex, כדי שלא תחרוג מהמסך */
+.opts{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:.35rem}
+.opts label{display:block;min-width:0;width:100%}
+.opts span{display:block;width:100%;overflow-wrap:anywhere;
+  font-size:clamp(.7rem,3vw,.84rem);padding:.5rem .2rem;line-height:1.25}
 </style>
 </head>
 <body>
@@ -294,9 +305,9 @@ section{padding:1.1rem 0}
     <p class="lede">שש שאלות, פחות מדקה. זה לא מבחן ולא אבחון — רק דרך לשים מילים על משהו שקשה להגיד בקול.</p>
     <p style="font-weight:600;margin-top:1rem">מה מביא אתכם?</p>
     <div class="tracks">
-      <button class="track" data-track="zugi"><span class="tic">&#128149;</span><span><b>זוגיות</b><span>מה שקורה בין שניכם</span></span></button>
-      <button class="track" data-track="mishpacha"><span class="tic">&#127968;</span><span><b>משפחה</b><span>הורים, אחים, ילדים בוגרים, משפחה מורחבת</span></span></button>
-      <button class="track" data-track="horut"><span class="tic">&#129505;</span><span><b>הורות</b><span>היומיום מול הילדים</span></span></button>
+      <button type="button" class="track" data-track="zugi"><span class="tic">&#128149;</span><span class="ttx"><b>זוגיות</b><i>מה שקורה בין שניכם</i></span></button>
+      <button type="button" class="track" data-track="mishpacha"><span class="tic">&#127968;</span><span class="ttx"><b>משפחה</b><i>הורים, אחים, ילדים בוגרים, משפחה מורחבת</i></span></button>
+      <button type="button" class="track" data-track="horut"><span class="tic">&#129505;</span><span class="ttx"><b>הורות</b><i>היומיום מול הילדים</i></span></button>
     </div>
     <p class="note">לא בטוחים? בחרו את מה שהכי קרוב. אין כאן תשובה נכונה.</p>
   </div>
