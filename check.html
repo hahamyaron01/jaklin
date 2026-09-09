@@ -276,7 +276,10 @@ main,section,div,p,h1,h2,h3,button,a,label{max-width:100%;min-width:0}
   padding:.15rem .7rem;font-size:.82rem;font-weight:600;margin-bottom:.6rem}
 /* שורת התשובות: גריד של שלוש עמודות שוות — לא flex, כדי שלא תחרוג מהמסך */
 .opts{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:.35rem}
-.opts label{display:block;min-width:0;width:100%}
+.opts label{display:block;min-width:0;width:100%;position:relative;overflow:hidden}
+/* הקלט המוסתר נשאר בתוך הכפתור שלו ולא מותח את רוחב הדף */
+.opts input{position:absolute!important;inset-block-start:0;inset-inline-start:0;
+  width:1px;height:1px;opacity:0;pointer-events:none;margin:0}
 .opts span{display:block;width:100%;overflow-wrap:anywhere;
   font-size:clamp(.7rem,3vw,.84rem);padding:.5rem .2rem;line-height:1.25}
 </style>
@@ -428,7 +431,7 @@ main,section,div,p,h1,h2,h3,button,a,label{max-width:100%;min-width:0}
     out.hidden=true; out.innerHTML='';
     chooser.hidden=true; wrap.hidden=false;
     if(location.hash.slice(1)!==key){ history.replaceState(null,'','#'+key); }
-    window.scrollTo({top:0,behavior:'smooth'});
+    wrap.scrollIntoView({behavior:'smooth',block:'start'});
   }
 
   document.querySelectorAll('.track').forEach(function(b){
@@ -438,7 +441,7 @@ main,section,div,p,h1,h2,h3,button,a,label{max-width:100%;min-width:0}
   document.getElementById('backToChoose').addEventListener('click',function(){
     wrap.hidden=true; chooser.hidden=false;
     history.replaceState(null,'',location.pathname);
-    window.scrollTo({top:0,behavior:'smooth'});
+    chooser.scrollIntoView({behavior:'smooth',block:'start'});
   });
 
   document.getElementById('showResult').addEventListener('click',function(){
