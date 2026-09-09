@@ -274,14 +274,19 @@ main,section,div,p,h1,h2,h3,button,a,label{max-width:100%;min-width:0}
 #quizWrap[hidden],#chooser[hidden]{display:none}
 .track-name{display:inline-block;background:var(--sky-deep);border-radius:999px;
   padding:.15rem .7rem;font-size:.82rem;font-weight:600;margin-bottom:.6rem}
-/* שורת התשובות: גריד של שלוש עמודות שוות — לא flex, כדי שלא תחרוג מהמסך */
-.opts{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:.35rem}
-.opts label{display:block;min-width:0;width:100%;position:relative;overflow:hidden}
-/* הקלט המוסתר נשאר בתוך הכפתור שלו ולא מותח את רוחב הדף */
-.opts input{position:absolute!important;inset-block-start:0;inset-inline-start:0;
-  width:1px;height:1px;opacity:0;pointer-events:none;margin:0}
-.opts span{display:block;width:100%;overflow-wrap:anywhere;
-  font-size:clamp(.7rem,3vw,.84rem);padding:.5rem .2rem;line-height:1.25}
+/* שורת התשובות: שלושה כפתורים בגריד, בלי שדות קלט כלל */
+.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.35rem;max-width:100%}
+.opt{display:block;width:100%;min-width:0;font:inherit;cursor:pointer;
+  text-align:center;font-size:clamp(.7rem,3vw,.84rem);line-height:1.25;
+  padding:.5rem .15rem;border:1px solid rgba(126,154,79,.35);border-radius:9px;
+  background:transparent;color:var(--ink-soft);overflow:hidden}
+.opt[aria-pressed="true"]{background:var(--olive);border-color:var(--olive);color:#fff}
+
+/* אף מיכל בעמוד לא יכול לחרוג מרוחב המסך */
+#quizWrap,#chooser,.quiz,.q,.tracks,.wrap{max-width:100%;overflow-x:clip}
+
+#dbg{position:fixed;inset-block-end:0;inset-inline:0;z-index:99;background:#3B0D0D;color:#fff;
+  font-size:12px;line-height:1.5;padding:.6rem;max-height:45vh;overflow:auto;direction:ltr;text-align:left}
 </style>
 </head>
 <body>
@@ -412,7 +417,7 @@ main,section,div,p,h1,h2,h3,button,a,label{max-width:100%;min-width:0}
       qBox=document.getElementById('questions'),
       out=document.getElementById('quizResult'),
       nameTag=document.getElementById('trackName'),
-      current=null;
+      current=null, answers={};
 
   function build(key){
     var t=DATA[key]; if(!t) return;
@@ -423,10 +428,19 @@ main,section,div,p,h1,h2,h3,button,a,label{max-width:100%;min-width:0}
       var d=document.createElement('div');
       d.className='q';
       var opts=LABELS.map(function(lb,v){
-        return '<label><input type="radio" name="q'+(i+1)+'" value="'+v+'"><span>'+lb+'</span></label>';
+        return '<button type="button" class="opt" data-i="'+i+'" data-v="'+v+'" aria-pressed="false">'+lb+'</button>';
       }).join('');
       d.innerHTML='<p>'+(i+1)+'. '+txt+'</p><div class="opts">'+opts+'</div>';
       qBox.appendChild(d);
+    });
+    answers={};
+    qBox.querySelectorAll('.opt').forEach(function(b){
+      b.addEventListener('click',function(){
+        var i=b.dataset.i;
+        qBox.querySelectorAll('.opt[data-i="'+i+'"]').forEach(function(o){o.setAttribute('aria-pressed','false');});
+        b.setAttribute('aria-pressed','true');
+        answers[i]=+b.dataset.v;
+      });
     });
     out.hidden=true; out.innerHTML='';
     chooser.hidden=true; wrap.hidden=false;
@@ -446,10 +460,7 @@ main,section,div,p,h1,h2,h3,button,a,label{max-width:100%;min-width:0}
 
   document.getElementById('showResult').addEventListener('click',function(){
     var sum=0,answered=0;
-    for(var i=1;i<=6;i++){
-      var c=document.querySelector('input[name="q'+i+'"]:checked');
-      if(c){sum+=+c.value;answered++;}
-    }
+    for(var i=0;i<6;i++){ if(answers[i]!==undefined){ sum+=answers[i]; answered++; } }
     var html;
     if(answered<6){
       html='<b>נשארו עוד כמה שאלות.</b><br>ענו על כל השש כדי לראות את התמונה המלאה.';
@@ -465,6 +476,24 @@ main,section,div,p,h1,h2,h3,button,a,label{max-width:100%;min-width:0}
     out.innerHTML=html; out.hidden=false;
     out.scrollIntoView({behavior:'smooth',block:'nearest'});
   });
+
+  if(/[?&]debug=1/.test(location.search)){
+    setTimeout(function(){
+      var docW=document.documentElement.clientWidth, bad=[];
+      document.querySelectorAll('*').forEach(function(el){
+        var r=el.getBoundingClientRect();
+        if(r.width>docW+2||r.right>docW+2||r.left<-2){
+          bad.push((el.tagName+'.'+(el.className||'-')).slice(0,42)+
+                   ' w='+Math.round(r.width)+' l='+Math.round(r.left)+' r='+Math.round(r.right));
+        }
+      });
+      var d=document.createElement('div'); d.id='dbg';
+      d.textContent='viewport='+docW+' | scrollW='+document.documentElement.scrollWidth+
+                    ' | bodyW='+Math.round(document.body.getBoundingClientRect().width)+
+                    ' || '+(bad.length?bad.slice(0,14).join('  //  '):'no overflow found');
+      document.body.appendChild(d);
+    },900);
+  }
 
   var h=location.hash.slice(1);
   if(DATA[h]) build(h);
